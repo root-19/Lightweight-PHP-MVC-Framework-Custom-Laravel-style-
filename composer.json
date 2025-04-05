@@ -19,7 +19,7 @@
     "repositories": [
       {
         "type": "path",
-           "url": "file:///C:/Users/admin/Desktop/laravel-project/framework"
+           "url": "C:/Users/admin/Desktop/laravel-project/framework"
       }
     ],
     "minimum-stability": "dev",
