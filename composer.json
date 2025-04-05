@@ -18,8 +18,8 @@
     },
     "repositories": [
       {
-        "type": "vcs",
-        "url": "https://github.com/root-19/Lightweight-PHP-MVC-Framework-Custom-Laravel-style-.git"
+        "type": "path",
+           "url": "file:///C:/Users/admin/Desktop/laravel-project/framework"
       }
     ],
     "minimum-stability": "dev",
