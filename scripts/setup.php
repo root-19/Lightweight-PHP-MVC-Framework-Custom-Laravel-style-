@@ -74,9 +74,9 @@ switch ($choice) {
         $dbConfig = [
             "driver" => "mysql",
             "host" => "localhost",
-            "dbname" => "your_database",
-            "username" => "your_username",
-            "password" => "your_password",
+            "dbname" => "framework",
+            "username" => "root",
+            "password" => "",
             "charset" => "utf8mb4"
         ];
         break;
