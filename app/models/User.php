@@ -1,0 +1,36 @@
+<?php
+// Define the namespace for the User model
+namespace root_dev\Models;
+
+// Include Database class (ensure the path is correct)
+require_once __DIR__ . '/../../config/database.php';
+use \Database;
+
+class User {
+
+    // Check if email exists
+    public function emailExists($email) {
+        $db = Database::connect();
+        $query = "SELECT COUNT(*) FROM users WHERE email = ?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$email]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    // Get user data by email
+    public function getUserByEmail($email) {
+        $db = Database::connect();
+        $query = "SELECT * FROM users WHERE email = ?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$email]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC); // Use \PDO here
+    }
+
+    // Register a new user
+    public function register($username, $email, $password) {
+        $db = Database::connect();
+        $query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        $stmt = $db->prepare($query);
+        return $stmt->execute([$username, $email, password_hash($password, PASSWORD_DEFAULT)]);
+    }
+}
