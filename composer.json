@@ -21,5 +21,7 @@
           "type": "vcs",
           "url": "https://github.com/root-19/Lightweight-PHP-MVC-Framework-Custom-Laravel-style-.git"
         }
-      ]
+      ],
+      "minimum-stability": "dev",
+  "prefer-stable": true
   }
