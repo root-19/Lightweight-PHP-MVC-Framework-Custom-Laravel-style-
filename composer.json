@@ -1,6 +1,7 @@
 {
     "name": "root_dev/framework",
     "description": "Lightweight PHP MVC Framework (Custom Laravel-style)",
+    "type": "project",
     "autoload": {
       "psr-4": {
         "root_dev\\": "app/"
