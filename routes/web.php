@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-use root_dev\Controller\AuthController;  // Import AuthController
+use root_dev\Controller\AuthController;  
 
-// Use __DIR__ to get the absolute path
+
 require_once __DIR__ . '/../core/Controller.php';
 require_once __DIR__ . '/../app/models/User.php';
 require_once __DIR__ . '/../app/controller/AuthController.php';

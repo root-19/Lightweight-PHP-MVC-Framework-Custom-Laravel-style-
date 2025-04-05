@@ -1,8 +1,8 @@
 <?php
-// Define the namespace for the User model
+
 namespace root_dev\Models;
 
-// Include Database class (ensure the path is correct)
+
 require_once __DIR__ . '/../../config/database.php';
 use \Database;
 

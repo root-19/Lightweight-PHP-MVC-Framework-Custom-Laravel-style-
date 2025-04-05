@@ -1,8 +1,8 @@
 <?php
 namespace root_dev\Controller;
 
-require_once __DIR__ . '/../models/User.php';  // Include the correct path to the User model
-use root_dev\Models\User;  // Use the correct namespace for the User model
+require_once __DIR__ . '/../models/User.php'; 
+use root_dev\Models\User;  
 
 class AuthController {
 
@@ -41,15 +41,15 @@ class AuthController {
                 require_once __DIR__ . '/../views/login.php';
             }
         } else {
-            // Display the login form
+     
             require_once __DIR__ . '/../views/login.php';
         }
     }
 
-    // Show registration form or process the registration request
+
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Get POST data
+      
             $username = $_POST['username'];
             $email = $_POST['email'];
             $password = $_POST['password'];
