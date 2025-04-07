@@ -4,43 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register</title>
-  <link rel="stylesheet" href="../../resources/css/app.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body class="bg-black text-white">
 
-  <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Register</h2>
+  <!-- Register Form Section -->
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="bg-gray-800 text-white w-full max-w-md p-10 rounded-lg shadow-xl">
+      <h2 class="text-3xl font-bold mb-4 text-center">Register</h2>
 
-    <form action="/register" method="POST" class="space-y-4">
-      <div>
-        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-        <input type="text" name="username" id="username" required
-               class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" />
-      </div>
+      <form action="/register" method="POST" class="space-y-4">
+        <div>
+          <label for="username" class="block text-lg">Username:</label>
+          <input type="text" name="username" id="username" required class="w-full p-3  text-black mb-4 border border-gray-300 rounded" />
+        </div>
 
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" name="email" id="email" required
-               class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" />
-      </div>
+        <div>
+          <label for="email" class="block text-lg">Email:</label>
+          <input type="email" name="email" id="email" required class="w-full p-3 mb-4 text-black border border-gray-300 rounded" />
+        </div>
 
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" name="password" id="password" required
-               class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" />
-      </div>
+        <div>
+          <label for="password" class="block text-lg">Password:</label>
+          <input type="password" name="password" id="password" required class="w-full p-3 text-black mb-6 border border-gray-300 rounded" />
+        </div>
 
-      <button type="submit"
-              class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-200">
-        Register
-      </button>
-    </form>
+        <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-full hover:bg-red-700 transition">
+          Register
+        </button>
+      </form>
 
-    <p class="text-center text-sm text-gray-600 mt-4">
-      Already have an account?
-      <a href="/login" class="text-blue-600 hover:underline">Login here</a>
-    </p>
+      <p class="text-center mt-4 text-lg">Already have an account? <a href="/login" class="text-red-600 hover:text-red-700">Login here</a></p>
+    </div>
   </div>
 
 </body>
 </html>
+
