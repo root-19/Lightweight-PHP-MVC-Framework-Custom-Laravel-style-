@@ -23,7 +23,7 @@
            "url": "C:/Users/admin/Desktop/laravel-project/framework"
       }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
   
