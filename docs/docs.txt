@@ -1,5 +1,67 @@
 # Framework Documentation
 
+## Command Line Interface (CLI)
+
+### Available Commands
+The framework provides a CLI tool for common development tasks:
+
+```bash
+# Generate new files
+php bin/cli.php make:controller [name]    # Create a new controller
+php bin/cli.php make:model [name]         # Create a new model
+php bin/cli.php make:view [name]          # Create a new view
+```
+
+### File Generation
+- Controllers are created in `app/controller/`
+- Models are created in `app/models/`
+- Views are created in `app/views/`
+
+## Database Migrations
+
+### Creating Migrations
+1. Create a new file in `database/migrations/` with timestamp prefix
+2. Follow the naming convention: `YYYY_MM_DD_HHMMSS_descriptive_name.php`
+3. Implement the migration class with `up()` method
+
+Example migration:
+```php
+<?php
+class CreateUsersTable {
+    public function up($pdo) {
+        $query = "
+            CREATE TABLE IF NOT EXISTS users (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                username VARCHAR(100),
+                email VARCHAR(100),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        ";
+        $pdo->exec($query);
+    }
+}
+```
+
+### Running Migrations
+Execute migrations using:
+```bash
+php database/migrate.php
+```
+
+## Admin Management
+
+### Available Scripts
+```bash
+# Create new admin user
+php scripts/admin/create_admin.php
+
+# Fix admin user issues
+php scripts/admin/fix_admin.php
+
+# Check admin status
+php scripts/admin/check_admin.php
+```
+
 ## Authentication System
 
 ### User Roles
@@ -60,9 +122,10 @@ The system logs all login attempts with the following information:
    - Role-based permissions
 
 ## System Requirements
-- PHP with bcrypt support
-- Database system (MySQL/PostgreSQL)
+- PHP 7.x or later
+- MySQL/MariaDB
 - Web server (Apache/Nginx)
+- CLI Access
 
 ## Security Considerations
 1. Password Storage
@@ -81,7 +144,7 @@ The system logs all login attempts with the following information:
 
 ## Maintenance
 - Regular security updates recommended
-- Monitor auth_debug.log for suspicious activities
+- Monitor logs/auth_debug.log for suspicious activities
 - Regular backup of user data
 - Periodic security audits
 

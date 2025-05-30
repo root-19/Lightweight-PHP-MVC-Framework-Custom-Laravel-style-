@@ -1,6 +1,5 @@
 <!-- app/views/dashboard.php -->
 
-<<<<<<< HEAD
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -75,16 +74,5 @@ if (!isset($_SESSION['user_id'])) {
         window.history.replaceState(null, null, window.location.href);
     }
     </script>
-=======
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
-<body>
-    <h1>Welcome, <?php echo $_SESSION['username']; ?>!</h1>
-    <p>This is your dashboard.</p>
-    <a href="/logout">Logout</a>
->>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
 </body>
 </html>

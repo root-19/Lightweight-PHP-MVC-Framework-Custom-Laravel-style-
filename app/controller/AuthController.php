@@ -2,7 +2,6 @@
 namespace root_dev\Controller;
 
 require_once __DIR__ . '/../models/User.php'; 
-<<<<<<< HEAD
 require_once __DIR__ . '/../auth/UserAuth.php';
 require_once __DIR__ . '/../auth/AdminAuth.php';
 require_once __DIR__ . '/../../config/database.php';
@@ -16,6 +15,25 @@ class AuthController {
     private $db;
     private $userAuth;
     private $adminAuth;
+
+    private function sanitizeInput($input) {
+        if (is_string($input)) {
+            return htmlspecialchars(strip_tags(trim($input)), ENT_QUOTES, 'UTF-8');
+        }
+        return $input;
+    }
+
+    private function validateEmail($email) {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    private function validatePassword($password) {
+        // At least 8 characters, 1 uppercase, 1 lowercase, 1 number
+        return strlen($password) >= 8 && 
+               preg_match('/[A-Z]/', $password) && 
+               preg_match('/[a-z]/', $password) && 
+               preg_match('/[0-9]/', $password);
+    }
 
     public function __construct() {
         if (session_status() === PHP_SESSION_NONE) {
@@ -33,9 +51,8 @@ class AuthController {
 
     public function login() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'] ?? '';
-            $password = $_POST['password'] ?? '';
-            $remember = isset($_POST['remember']) ? true : false;
+            $email = $this->sanitizeInput($_POST['email'] ?? '');
+            $password = $_POST['password'] ?? ''; // Don't sanitize password before verification
 
             if (empty($email) || empty($password)) {
                 $_SESSION['error'] = 'Please fill in all fields';
@@ -43,19 +60,28 @@ class AuthController {
                 exit();
             }
 
+            if (!$this->validateEmail($email)) {
+                $_SESSION['error'] = 'Please enter a valid email address';
+                header('Location: /login');
+                exit();
+            }
+
+            // Rate limiting check
+            if ($this->isLoginAttemptLimited($email)) {
+                $_SESSION['error'] = 'Too many login attempts. Please try again later.';
+                header('Location: /login');
+                exit();
+            }
+
             // Try admin login first
             $adminResult = $this->adminAuth->attemptLogin($email, $password);
             
-            // Debug log
-            file_put_contents('auth_debug.log', "Admin login attempt result: " . print_r($adminResult, true) . "\n", FILE_APPEND);
-            
             if ($adminResult['success']) {
                 if (isset($adminResult['user']) && is_array($adminResult['user'])) {
-                    $_SESSION['user_id'] = $adminResult['user']['id'];
-                    $_SESSION['username'] = $adminResult['user']['username'];
-                    $_SESSION['role'] = 'admin';
+                    $this->setUserSession($adminResult['user'], 'admin');
+                    $this->resetLoginAttempts($email);
 
-                    if ($remember) {
+                    if (isset($_POST['remember']) && $_POST['remember']) {
                         $token = bin2hex(random_bytes(32));
                         $this->adminAuth->updateRememberToken($adminResult['user']['id'], $token);
                         setcookie('remember_token', $token, time() + (30 * 24 * 60 * 60), '/', '', true, true);
@@ -69,16 +95,12 @@ class AuthController {
             // Try user login if admin login failed
             $userResult = $this->userAuth->attemptLogin($email, $password);
             
-            // Debug log
-            file_put_contents('auth_debug.log', "User login attempt result: " . print_r($userResult, true) . "\n", FILE_APPEND);
-            
             if ($userResult['success']) {
                 if (isset($userResult['user']) && is_array($userResult['user'])) {
-                    $_SESSION['user_id'] = $userResult['user']['id'];
-                    $_SESSION['username'] = $userResult['user']['username'];
-                    $_SESSION['role'] = 'user';
+                    $this->setUserSession($userResult['user'], 'user');
+                    $this->resetLoginAttempts($email);
 
-                    if ($remember) {
+                    if (isset($_POST['remember']) && $_POST['remember']) {
                         $token = bin2hex(random_bytes(32));
                         $this->userAuth->updateRememberToken($userResult['user']['id'], $token);
                         setcookie('remember_token', $token, time() + (30 * 24 * 60 * 60), '/', '', true, true);
@@ -89,6 +111,8 @@ class AuthController {
                 }
             }
 
+            // Increment failed login attempts
+            $this->incrementLoginAttempts($email);
             $_SESSION['error'] = 'Invalid email or password';
             header('Location: /login');
             exit();
@@ -135,46 +159,80 @@ class AuthController {
 
     public function register() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = trim($_POST['username'] ?? '');
-            $email = trim($_POST['email'] ?? '');
+            $username = $this->sanitizeInput(trim($_POST['username'] ?? ''));
+            $email = $this->sanitizeInput(trim($_POST['email'] ?? ''));
             $password = $_POST['password'] ?? '';
             $confirmPassword = $_POST['confirm_password'] ?? '';
 
+            // Validate all required fields
             if (empty($username) || empty($email) || empty($password) || empty($confirmPassword)) {
                 $_SESSION['error'] = "All fields are required.";
                 header('Location: /register');
                 exit();
             }
 
+            // Validate email format
+            if (!$this->validateEmail($email)) {
+                $_SESSION['error'] = "Please enter a valid email address.";
+                header('Location: /register');
+                exit();
+            }
+
+            // Validate password strength
+            if (!$this->validatePassword($password)) {
+                $_SESSION['error'] = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.";
+                header('Location: /register');
+                exit();
+            }
+
+            // Validate password confirmation
             if ($password !== $confirmPassword) {
                 $_SESSION['error'] = "Passwords do not match.";
                 header('Location: /register');
                 exit();
             }
+
+            // Validate username length and format
+            if (strlen($username) < 3 || strlen($username) > 50 || !preg_match('/^[a-zA-Z0-9_-]+$/', $username)) {
+                $_SESSION['error'] = "Username must be between 3 and 50 characters and can only contain letters, numbers, underscores, and hyphens.";
+                header('Location: /register');
+                exit();
+            }
             
+            // Check if email already exists
             if ($this->userAuth->emailExists($email) || $this->adminAuth->emailExists($email)) {
                 $_SESSION['error'] = "Email is already registered.";
                 header('Location: /register');
                 exit();
             }
 
+            // Check if username already exists
             $user = new User();
-            if ($user->register($username, $email, $password, 'user')) {
-                $userData = $user->getUserByEmail($email);
-                if ($userData) {
-                    $this->setUserSession($userData, 'user');
-                    header('Location: /dashboard');
-                    exit();
-                }
-            } else {
-                $_SESSION['error'] = implode(", ", $user->getErrors());
+            if ($user->usernameExists($username)) {
+                $_SESSION['error'] = "Username is already taken.";
                 header('Location: /register');
                 exit();
             }
 
-            $_SESSION['error'] = "Failed to register. Please try again.";
-            header('Location: /register');
-            exit();
+            try {
+                if ($user->register($username, $email, $password, 'user')) {
+                    $userData = $user->getUserByEmail($email);
+                    if ($userData) {
+                        $this->setUserSession($userData, 'user');
+                        header('Location: /dashboard');
+                        exit();
+                    }
+                } else {
+                    $_SESSION['error'] = implode(", ", $user->getErrors());
+                    header('Location: /register');
+                    exit();
+                }
+            } catch (\Exception $e) {
+                error_log("Registration error: " . $e->getMessage());
+                $_SESSION['error'] = "An error occurred during registration. Please try again later.";
+                header('Location: /register');
+                exit();
+            }
         }
 
         require_once __DIR__ . '/../../public/register.php';
@@ -200,14 +258,10 @@ class AuthController {
             }
         }
 
-        // Clear all session data
+        // Clear session
         session_unset();
         session_destroy();
-        
-        // Start a new session for flash messages
-        session_start();
-        $_SESSION['success'] = 'You have been successfully logged out.';
-        
+
         // Redirect to login page
         header('Location: /login');
         exit();
@@ -215,131 +269,107 @@ class AuthController {
 
     public function forgetPassword() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'] ?? '';
-            $newPassword = $_POST['new_password'] ?? '';
-            $retypePassword = $_POST['retype_password'] ?? '';
+            $email = trim($_POST['email'] ?? '');
 
-            if (empty($email) || empty($newPassword) || empty($retypePassword)) {
-                $_SESSION['error'] = "All fields are required.";
+            if (empty($email)) {
+                $_SESSION['error'] = "Email is required.";
                 header('Location: /forget-password');
                 exit();
             }
 
-            if ($newPassword !== $retypePassword) {
-                $_SESSION['error'] = "Passwords do not match.";
+            // Check if email exists in either user or admin tables
+            $user = new User();
+            if (!$user->emailExists($email)) {
+                $_SESSION['error'] = "Email not found.";
                 header('Location: /forget-password');
                 exit();
             }
 
-            // Try updating admin password first
-            if ($this->adminAuth->emailExists($email)) {
-                if ($this->adminAuth->updatePassword($email, $newPassword)) {
-                    $_SESSION['success'] = "Admin password updated successfully.";
-                    header('Location: /login');
-                    exit();
-                }
-            }
-            
-            // Try updating user password
-            if ($this->userAuth->emailExists($email)) {
-                if ($this->userAuth->updatePassword($email, $newPassword)) {
-                    $_SESSION['success'] = "Password updated successfully.";
-                    header('Location: /login');
-                    exit();
-                }
-            }
+            // Generate password reset token
+            $token = bin2hex(random_bytes(32));
+            $expiry = date('Y-m-d H:i:s', strtotime('+1 hour'));
 
-            $_SESSION['error'] = "Email not found or failed to update password.";
-            header('Location: /forget-password');
-            exit();
+            try {
+                $stmt = $this->db->prepare("UPDATE users SET reset_token = ?, reset_token_expiry = ? WHERE email = ?");
+                $stmt->execute([$token, $expiry, $email]);
+
+                // TODO: Send password reset email
+                // For now, just store the token in session for demo purposes
+                $_SESSION['reset_token'] = $token;
+                $_SESSION['success'] = "Password reset instructions have been sent to your email.";
+                header('Location: /login');
+                exit();
+
+            } catch (\PDOException $e) {
+                $_SESSION['error'] = "An error occurred. Please try again later.";
+                header('Location: /forget-password');
+                exit();
+            }
         }
 
         require_once __DIR__ . '/../../public/forget-password.php';
     }
 
-    public function showLoginForm() {
-        require_once __DIR__ . '/../../public/login.php';
-    }
-=======
-use root_dev\Models\User;  
-
-class AuthController {
-
-    public function login() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-    
-            $user = new User();
-    
-            if ($user->emailExists($email)) {
-                $userData = $user->getUserByEmail($email);
-    
-                if (password_verify($password, $userData['password'])) {
-                    // Store user session
-                    $_SESSION['user_id'] = $userData['id'];
-                    $_SESSION['username'] = $userData['username'];
-                    $_SESSION['role'] = $userData['role']; 
-
-                    // /role directionjk
-                       if ($userData['role'] === 'admin') {
-                        header('Location: /admin/dashboard');  
-                    } else {
-                        header('Location: /dashboard');
-                    }
-                    exit();
-                } else {
-                    $error = "Invalid password.";
-                    require_once __DIR__ . '/../../public/login.php';
-                }
-            } else {
-                $error = "Email not found.";
-                require_once __DIR__ . '/../../public/login.php';
-            }
-        } else {
-            require_once __DIR__ . '/../../public/login.php';
-        }
-    }
-    
-    public function register() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+    private function isLoginAttemptLimited($email) {
+        try {
+            $stmt = $this->db->prepare("SELECT COUNT(*) as attempts, MAX(attempt_time) as last_attempt 
+                                       FROM login_attempts 
+                                       WHERE email = ? AND attempt_time > DATE_SUB(NOW(), INTERVAL 15 MINUTE)");
+            $stmt->execute([$email]);
+            $result = $stmt->fetch(\PDO::FETCH_ASSOC);
             
-
-            $role = isset($_POST['role']) ? $_POST['role'] : 'user'; 
-            $user = new User();
-    
-            if ($user->emailExists($email)) {
-                $error = "Email is already registered.";
-                require_once __DIR__ . '/../views/register.php';
-            } else {
-                if ($user->register($username, $email, $password, $role)) {
-                    $userData = $user->getUserByEmail($email);
-                    $_SESSION['user_id'] = $userData['id'];
-                    $_SESSION['username'] = $userData['username'];
-                    $_SESSION['role'] = $userData['role']; 
-                    
-                    header('Location: /dashboard');
-                    exit();
-                } else {
-                    $error = "Failed to register. Please try again.";
-                    require_once __DIR__ . '/../../public/register.php';
-                }
-            }
-        } else {
-            require_once __DIR__ . '/../../public/register.php';
+            return $result['attempts'] >= 5;
+        } catch (\PDOException $e) {
+            // If table doesn't exist, create it
+            $this->createLoginAttemptsTable();
+            return false;
         }
     }
-    
 
-    // Handle user logout
-    public function logout() {
-        session_start();
-        session_destroy();
-        header('Location: /login');
-        exit();
+    private function incrementLoginAttempts($email) {
+        try {
+            $stmt = $this->db->prepare("INSERT INTO login_attempts (email, attempt_time) VALUES (?, NOW())");
+            $stmt->execute([$email]);
+        } catch (\PDOException $e) {
+            // If table doesn't exist, create it and try again
+            $this->createLoginAttemptsTable();
+            $stmt = $this->db->prepare("INSERT INTO login_attempts (email, attempt_time) VALUES (?, NOW())");
+            $stmt->execute([$email]);
+        }
     }
->>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
+
+    private function resetLoginAttempts($email) {
+        $stmt = $this->db->prepare("DELETE FROM login_attempts WHERE email = ?");
+        $stmt->execute([$email]);
+    }
+
+    private function createLoginAttemptsTable() {
+        $this->db->exec("CREATE TABLE IF NOT EXISTS login_attempts (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            email VARCHAR(255) NOT NULL,
+            attempt_time DATETIME NOT NULL,
+            INDEX (email, attempt_time)
+        )");
+    }
+
+    private function rotateRememberToken($userId, $role = 'user') {
+        $token = bin2hex(random_bytes(32));
+        $hashedToken = password_hash($token, PASSWORD_DEFAULT);
+        
+        if ($role === 'admin') {
+            $this->adminAuth->updateRememberToken($userId, $hashedToken);
+        } else {
+            $this->userAuth->updateRememberToken($userId, $hashedToken);
+        }
+        
+        setcookie('remember_token', $token, [
+            'expires' => time() + (30 * 24 * 60 * 60),
+            'path' => '/',
+            'secure' => true,
+            'httponly' => true,
+            'samesite' => 'Strict'
+        ]);
+        
+        return $token;
+    }
 }   

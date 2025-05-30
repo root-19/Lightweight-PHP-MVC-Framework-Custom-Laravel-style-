@@ -1,76 +1,6 @@
 <?php
 // session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
-
-// Add this at the beginning of the file, after the PHP opening tag
-if (isset($_GET['download']) && $_GET['download'] === 'true') {
-    // Set headers for file download
-    header('Content-Type: application/zip');
-    header('Content-Disposition: attachment; filename="goravels-framework.zip"');
-    
-    // Create a temporary directory
-    $tempDir = sys_get_temp_dir() . '/goravels-temp-' . uniqid();
-    mkdir($tempDir);
-    
-    // Copy framework files to temp directory
-    $sourceDir = __DIR__ . '/..';
-    $excludeDirs = ['vendor', 'node_modules', '.git'];
-    
-    function copyDir($source, $dest, $exclude) {
-        if (!is_dir($dest)) {
-            mkdir($dest, 0755, true);
-        }
-        
-        $dir = opendir($source);
-        while (($file = readdir($dir)) !== false) {
-            if ($file != '.' && $file != '..') {
-                $src = $source . '/' . $file;
-                $dst = $dest . '/' . $file;
-                
-                if (is_dir($src)) {
-                    if (!in_array($file, $exclude)) {
-                        copyDir($src, $dst, $exclude);
-                    }
-                } else {
-                    copy($src, $dst);
-                }
-            }
-        }
-        closedir($dir);
-    }
-    
-    copyDir($sourceDir, $tempDir, $excludeDirs);
-    
-    // Create zip file
-    $zipFile = $tempDir . '.zip';
-    $zip = new ZipArchive();
-    $zip->open($zipFile, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-    
-    $files = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($tempDir),
-        RecursiveIteratorIterator::LEAVES_ONLY
-    );
-    
-    foreach ($files as $file) {
-        if (!$file->isDir()) {
-            $filePath = $file->getRealPath();
-            $relativePath = substr($filePath, strlen($tempDir) + 1);
-            $zip->addFile($filePath, $relativePath);
-        }
-    }
-    
-    $zip->close();
-    
-    // Output the zip file
-    readfile($zipFile);
-    
-    // Clean up
-    unlink($zipFile);
-    array_map('unlink', glob("$tempDir/**/*.*"));
-    rmdir($tempDir);
-    
-    exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,14 +27,14 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
         }
 
         .code-block {
-            background-color: #000000;
+            background-color: #1e1e1e;
             padding: 1.5rem;
             border-radius: 0.5rem;
             font-family: 'Fira Code', monospace;
             overflow-x: auto;
             position: relative;
-            border: 1px solid #ff0000;
-            box-shadow: 0 4px 6px rgba(255, 0, 0, 0.1);
+            border: 1px solid #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .code-block pre {
@@ -113,26 +43,12 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
         }
 
         /* Syntax highlighting colors */
-        .code-keyword { color: #ff0000; }  /* Red for keywords */
-        .code-string { color: #00ff00; }   /* Green for strings */
-        .code-comment { color: #ff00ff; }  /* Magenta for comments */
-        .code-function { color: #00ffff; } /* Cyan for functions */
-        .code-variable { color: #ffff00; } /* Yellow for variables */
-        .code-operator { color: #ff0000; } /* Red for operators */
-        .code-property { color: #00ff00; } /* Green for properties */
-        .code-class { color: #00ffff; }    /* Cyan for classes */
-        .code-namespace { color: #ff00ff; }/* Magenta for namespaces */
-        .code-type { color: #ffff00; }     /* Yellow for types */
-        .code-number { color: #ff8800; }   /* Orange for numbers */
-        .code-constant { color: #ff00ff; } /* Magenta for constants */
-        .code-attribute { color: #00ff00; }/* Green for attributes */
-        .code-tag { color: #ff0000; }      /* Red for HTML/XML tags */
-        .code-parameter { color: #ffff00; }/* Yellow for parameters */
-        .code-sql-keyword { color: #ff0000; }    /* Red for SQL keywords */
-        .code-sql-table { color: #00ffff; }      /* Cyan for table names */
-        .code-sql-column { color: #ffff00; }     /* Yellow for column names */
-        .code-sql-type { color: #00ff00; }       /* Green for SQL types */
-        .code-sql-constraint { color: #ff00ff; } /* Magenta for constraints */
+        .code-keyword { color: #569cd6; }
+        .code-string { color: #ce9178; }
+        .code-comment { color: #6a9955; }
+        .code-function { color: #dcdcaa; }
+        .code-variable { color: #9cdcfe; }
+        .code-operator { color: #d4d4d4; }
 
         /* File structure icons */
         .folder-icon::before {
@@ -140,7 +56,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             margin-right: 0.5rem;
-            color: #ff0000;
+            color: #e2b340;
         }
 
         .file-icon::before {
@@ -148,7 +64,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             margin-right: 0.5rem;
-            color: #ffffff;
+            color: #9cdcfe;
         }
 
         .php-file-icon::before {
@@ -156,35 +72,35 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             margin-right: 0.5rem;
-            color: #ff0000;
+            color: #787cb4;
         }
 
         /* Guide section enhancements */
         .guide-section {
-            background: #000000;
+            background: #1a1a1a;
             margin-bottom: 2rem;
             padding: 1.5rem;
-            border: 1px solid #ff0000;
+            border: 1px solid #333;
             border-radius: 0.5rem;
             flex: 1 1 calc(50% - 1rem);
             min-width: 300px;
-            box-shadow: 0 4px 6px rgba(255, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .guide-section:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(255, 0, 0, 0.2);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
 
         /* Code block header */
         .code-header {
-            background: #000000;
+            background: #252525;
             padding: 0.5rem 1rem;
-            border-bottom: 1px solid #ff0000;
+            border-bottom: 1px solid #333;
             border-radius: 0.5rem 0.5rem 0 0;
             font-family: 'Fira Code', monospace;
-            color: #ffffff;
+            color: #d4d4d4;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -197,21 +113,21 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
             display: inline-block;
         }
 
-        .code-dot.red { background-color: #ff0000; }
-        .code-dot.yellow { background-color: #ff0000; }
-        .code-dot.green { background-color: #ff0000; }
+        .code-dot.red { background-color: #ff5f56; }
+        .code-dot.yellow { background-color: #ffbd2e; }
+        .code-dot.green { background-color: #27c93f; }
 
         .guide-section {
             margin-bottom: 2rem;
             padding: 1rem;
-            border: 1px solid #ff0000;
+            border: 1px solid #333;
             border-radius: 0.5rem;
             flex: 1 1 calc(50% - 1rem);
             min-width: 300px;
         }
 
         .step-number {
-            background-color: #ff0000;
+            background-color: #dc2626;
             color: white;
             width: 24px;
             height: 24px;
@@ -225,7 +141,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
         .step {
             margin-bottom: 1rem;
             padding: 0.5rem;
-            border-left: 2px solid #ff0000;
+            border-left: 2px solid #dc2626;
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.5s, transform 0.5s;
@@ -280,7 +196,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
         }
 
         .header-gradient {
-            background: linear-gradient(45deg, #000000, #1a0000, #000000);
+            background: linear-gradient(45deg, #1a1a1a, #2d1a1a, #1a1a1a);
             background-size: 200% 200%;
             animation: gradientBG 15s ease infinite;
         }
@@ -297,7 +213,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
             height: 2px;
             bottom: -4px;
             left: 0;
-            background-color: #ff0000;
+            background-color: #dc2626;
             transition: width 0.3s ease;
         }
 
@@ -308,12 +224,12 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
         .guide-section {
             animation: fadeInUp 0.6s ease-out;
             transition: all 0.3s ease;
-            background: linear-gradient(145deg, #000000, #1a0000);
+            background: linear-gradient(145deg, #1a1a1a, #2d1a1a);
         }
 
         .guide-section:hover {
             transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
         .code-block {
@@ -323,7 +239,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
 
         .code-block:hover {
             transform: scale(1.01);
-            box-shadow: 0 8px 16px rgba(255, 0, 0, 0.2);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .step {
@@ -333,7 +249,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
 
         .step:hover {
             transform: translateX(10px);
-            background: rgba(255, 0, 0, 0.1);
+            background: rgba(220, 38, 38, 0.1);
         }
 
         .step-number {
@@ -342,7 +258,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
 
         /* Enhanced button styles */
         .btn-primary {
-            background: linear-gradient(45deg, #ff0000, #990000);
+            background: linear-gradient(45deg, #dc2626, #991b1b);
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
@@ -356,17 +272,17 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
         }
 
         /* Enhanced code header */
         .code-header {
-            background: linear-gradient(45deg, #000000, #1a0000);
+            background: linear-gradient(45deg, #252525, #2d1a1a);
             transition: all 0.3s ease;
         }
 
         .code-header:hover {
-            background: linear-gradient(45deg, #1a0000, #000000);
+            background: linear-gradient(45deg, #2d1a1a, #252525);
         }
 
         /* Scroll animations */
@@ -384,22 +300,20 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
 </head>
 <body class="bg-black text-white">
     <!-- Header -->
-    <header class="py-4 ">
+    <header class="py-4 header-gradient">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center">
                 <div class="text-2xl font-bold text-red-600">Next Gen </div>
                 <nav class="space-x-6">
-                    <a href="?download=true" class="btn-primary inline-flex items-center">
-                        <i class="fas fa-download mr-2"></i>
-                        Download Framework
-                    </a>
+                    <a href="/login" class="nav-link text-white hover:text-red-600">Login</a>
+                    <a href="/register" class="nav-link text-white hover:text-red-600">Register</a>
                 </nav>
             </div>
         </div>
     </header>
 
     <!-- Welcome Section -->
-    <div class="container mx-auto px-4 py-8 mt-20">
+    <div class="container mx-auto px-4 py-8">
         <div class="text-center mb-12">
             <h1 class="text-6xl font-bold mb-6">
                 <span class="text-red-600">Goravels</span> PHP Framework
@@ -407,23 +321,7 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
 
             <p id="typewriter" class="text-xl text-gray-300 mb-10 typewriter-text"></p>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div class="bg-black border border-red-600 p-6 rounded-lg">
-                    <i class="fas fa-bolt text-red-600 text-3xl mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">Lightning Fast</h3>
-                    <p class="text-gray-300">Built for speed with optimized routing and caching. Experience blazing fast response times.</p>
-                </div>
-                <div class="bg-black border border-red-600 p-6 rounded-lg">
-                    <i class="fas fa-code text-red-600 text-3xl mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">Clean Code</h3>
-                    <p class="text-gray-300">Follows modern PHP practices with elegant syntax and intuitive structure.</p>
-                </div>
-                <div class="bg-black border border-red-600 p-6 rounded-lg">
-                    <i class="fas fa-shield-alt text-red-600 text-3xl mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">Secure by Default</h3>
-                    <p class="text-gray-300">Built-in security features protect your applications from common vulnerabilities.</p>
-                </div>
-            </div>
+         
         </div>
 
         <!-- Framework Guide -->
@@ -478,19 +376,11 @@ if (isset($_GET['download']) && $_GET['download'] === 'true') {
                         </div>
                         <pre>
 <span class="code-comment">// app/controller/ExampleController.php</span>
-<span class="code-keyword">namespace</span> <span class="code-namespace">root_dev\Controller</span>;
+<span class="code-keyword">namespace</span> <span class="code-variable">root_dev\Controller</span>;
 
-<span class="code-keyword">class</span> <span class="code-class">ExampleController</span> {
+<span class="code-keyword">class</span> <span class="code-function">ExampleController</span> {
     <span class="code-keyword">public function</span> <span class="code-function">index</span>() {
-        <span class="code-comment">// Return view with data</span>
-        <span class="code-keyword">return</span> <span class="code-variable">$this</span>->view->render(<span class="code-string">'example/index'</span>, [
-            <span class="code-string">'title'</span> => <span class="code-string">'Welcome'</span>
-        ]);
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">about</span>() {
-        <span class="code-comment">// Simple about page</span>
-        <span class="code-keyword">return</span> <span class="code-variable">$this</span>->view->render(<span class="code-string">'example/about'</span>);
+        <span class="code-comment">// Your code here</span>
     }
 }</pre>
                     </div>
@@ -526,26 +416,21 @@ php bin/cli.php make:view user_view</pre>
                             <span class="code-dot red"></span>
                             <span class="code-dot yellow"></span>
                             <span class="code-dot green"></span>
-                            <span class="php-file-icon">2024_03_20_create_examples_table.php</span>
+                            <span class="php-file-icon">2024_03_20_create_users_table.php</span>
                         </div>
                         <pre>
-<span class="code-comment">// database/migrations/2024_03_20_create_examples_table.php</span>
-<span class="code-keyword">class</span> <span class="code-class">CreateExamplesTable</span> {
-    <span class="code-keyword">public function</span> <span class="code-function">up</span>(<span class="code-variable">$pdo</span>) {
-        <span class="code-variable">$query</span> = <span class="code-string">"
-            CREATE TABLE IF NOT EXISTS examples (
+<span class="code-comment">// database/migrations/2024_03_20_create_users_table.php</span>
+<span class="code-keyword">class</span> <span class="code-function">CreateUsersTable</span> {
+    <span class="code-keyword">public function</span> <span class="code-function">up</span>($pdo) {
+        $query = "
+            CREATE TABLE IF NOT EXISTS users (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-                title VARCHAR(100) NOT NULL,
-                description TEXT,
+                username VARCHAR(100),
+                email VARCHAR(100),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
-        "</span>;
-        <span class="code-variable">$pdo</span>->exec(<span class="code-variable">$query</span>);
-    }
-
-    <span class="code-keyword">public function</span> <span class="code-function">down</span>(<span class="code-variable">$pdo</span>) {
-        <span class="code-variable">$query</span> = <span class="code-string">"DROP TABLE IF EXISTS examples;"</span>;
-        <span class="code-variable">$pdo</span>->exec(<span class="code-variable">$query</span>);
+        ";
+        $pdo->exec($query);
     }
 }</pre>
                     </div>
@@ -651,7 +536,7 @@ php scripts/admin/check_admin.php</pre>
 
     <script>
         // Welcome message typewriter effect
-        const text = "Why settle for the old ways? Start better with PHP and build modern web apps faster, easier, and cleaner — only with Goravels. Experience the power of a lightweight, secure, and developer-friendly framework that makes coding a joy. From simple websites to complex applications, Goravels has got you covered with its elegant architecture and powerful features.";
+        const text = "Why settle for the old ways? Start better with PHP and build modern web apps faster, easier, and cleaner — only with Root-Dev.";
         const element = document.getElementById("typewriter");
         let i = 0;
 
@@ -659,7 +544,7 @@ php scripts/admin/check_admin.php</pre>
             if (i < text.length) {
                 element.innerHTML += text.charAt(i);
                 i++;
-                setTimeout(type, 30); // Slightly faster typing speed
+                setTimeout(type, 45);
             } else {
                 // Start showing steps after welcome message is done
                 setTimeout(showSteps, 1000);

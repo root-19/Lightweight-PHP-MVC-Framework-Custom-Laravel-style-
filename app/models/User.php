@@ -2,23 +2,84 @@
 
 namespace root_dev\Models;
 
-
 require_once __DIR__ . '/../../config/database.php';
-<<<<<<< HEAD
 use root_dev\Config\Database;
-=======
-use \Database;
->>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
-
-
 
 class User {
-<<<<<<< HEAD
     private $db;
     private $errors = [];
+    protected $table = 'users';
+    protected $fillable = ['username', 'email', 'password', 'role', 'remember_token'];
 
     public function __construct() {
         $this->db = Database::connect();
+    }
+
+    // Get all users
+    public function all() {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM {$this->table}");
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            $this->errors[] = "Database error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    // Find user by id
+    public function find($id) {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE id = ?");
+            $stmt->execute([$id]);
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            $this->errors[] = "Database error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    // Create a new user
+    public function create($data) {
+        try {
+            $columns = implode(', ', $this->fillable);
+            $placeholders = ':' . implode(', :', $this->fillable);
+            $query = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
+            $stmt = $this->db->prepare($query);
+            return $stmt->execute($data);
+        } catch (\PDOException $e) {
+            $this->errors[] = "Database error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    // Update user by id
+    public function update($id, $data) {
+        try {
+            $set = '';
+            foreach ($this->fillable as $column) {
+                $set .= "{$column} = :{$column}, ";
+            }
+            $set = rtrim($set, ', ');
+            $query = "UPDATE {$this->table} SET {$set} WHERE id = :id";
+            $stmt = $this->db->prepare($query);
+            $data['id'] = $id;
+            return $stmt->execute($data);
+        } catch (\PDOException $e) {
+            $this->errors[] = "Database error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    // Delete user by id
+    public function delete($id) {
+        try {
+            $stmt = $this->db->prepare("DELETE FROM {$this->table} WHERE id = ?");
+            return $stmt->execute([$id]);
+        } catch (\PDOException $e) {
+            $this->errors[] = "Database error: " . $e->getMessage();
+            return false;
+        }
     }
 
     // Check if email exists
@@ -31,21 +92,10 @@ class User {
             $this->errors[] = "Database error: " . $e->getMessage();
             return false;
         }
-=======
-
-    // Check if email exists
-    public function emailExists($email) {
-        $db = Database::connect();
-        $query = "SELECT COUNT(*) FROM users WHERE email = ?";
-        $stmt = $db->prepare($query);
-        $stmt->execute([$email]);
-        return $stmt->fetchColumn() > 0;
->>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
     }
 
     // Get user data by email
     public function getUserByEmail($email) {
-<<<<<<< HEAD
         try {
             $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ?");
             $stmt->execute([$email]);
@@ -160,20 +210,5 @@ class User {
     // Get last error
     public function getErrors() {
         return $this->errors;
-=======
-        $db = Database::connect();
-        $query = "SELECT * FROM users WHERE email = ?";
-        $stmt = $db->prepare($query);
-        $stmt->execute([$email]);
-        return $stmt->fetch(\PDO::FETCH_ASSOC); // Use \PDO here
-    }
-
-    // Register a new user
-    public function register($username, $email, $password) {
-        $db = Database::connect();
-        $query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-        $stmt = $db->prepare($query);
-        return $stmt->execute([$username, $email, password_hash($password, PASSWORD_DEFAULT)]);
->>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
     }
 }

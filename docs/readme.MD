@@ -12,18 +12,30 @@ framework/
 │   ├── controller/
 │   ├── models/
 │   ├── views/
+├── bin/
+│   └── cli.php
 ├── config/
 │   └── database.php
 ├── core/
 │   └── Database.php
-├── migrations/
+├── database/
+│   ├── migrations/
+│   └── migrate.php
+├── docs/
+│   ├── readme.MD
+│   └── docs.txt
+├── logs/
+│   ├── auth_debug.log
+│   └── admin_debug.log
 ├── public/
-│   └── index.php
-├── cli.php
-└── migrate.php
-└── router.php
-
-
+│   ├── index.php
+│   └── router.php
+├── scripts/
+│   └── admin/
+│       ├── create_admin.php
+│       ├── fix_admin.php
+│       └── check_admin.php
+└── vendor/
 ```
 
 ---
@@ -40,12 +52,17 @@ framework/
 
 ### 1. 📦 Create Files (Controller, Model, View)
 
-Use `cli.php` to generate files automatically.
+Use the CLI tool to generate files automatically:
 
 ```bash
-php cli.php make:controller UserController
-php cli.php make:model User
-php cli.php make:view user_view
+# Generate a controller
+php bin/cli.php make:controller UserController
+
+# Generate a model
+php bin/cli.php make:model User
+
+# Generate a view
+php bin/cli.php make:view user_view
 ```
 
 Generated files will go into their respective folders:
@@ -57,9 +74,9 @@ Generated files will go into their respective folders:
 
 ### 2. 🧱 Create a Migration File (for Table Creation)
 
-Manually create a migration file inside the `/migrations/` folder.
+Manually create a migration file inside the `/database/migrations/` folder.
 
-Example file: `migrations/2025_04_04_184533_create_faculty_table.php`
+Example file: `database/migrations/2025_04_04_184533_create_faculty_table.php`
 
 ```php
 <?php
@@ -80,7 +97,10 @@ class CreateFacultyTable {
 }
 ```
 
-📝 **Important**: Class names must NOT start with numbers.
+📝 **Important**: 
+- Class names must NOT start with numbers
+- Migration files should be named with timestamp prefix (YYYY_MM_DD_HHMMSS)
+- Each migration should have a unique name
 
 ---
 
@@ -89,7 +109,7 @@ class CreateFacultyTable {
 Use the migration runner to push your defined tables to the database:
 
 ```bash
-php migrate.php
+php database/migrate.php
 ```
 
 Each migration file will:
@@ -101,26 +121,46 @@ You will see success messages in your terminal.
 
 ---
 
+### 4. 👤 Admin Management
+
+The framework includes several admin management scripts:
+
+```bash
+# Create a new admin user
+php scripts/admin/create_admin.php
+
+# Fix admin user issues
+php scripts/admin/fix_admin.php
+
+# Check admin user status
+php scripts/admin/check_admin.php
+```
+
+---
+
 ## ✅ Example Workflow
 
 ```bash
 # Step 1: Generate controller, model, and view
-php cli.php make:controller FacultyController
-php cli.php make:model Faculty
-php cli.php make:view faculty
+php bin/cli.php make:controller FacultyController
+php bin/cli.php make:model Faculty
+php bin/cli.php make:view faculty
 
 # Step 2: Create migration file
-# (create manually: migrations/2025_04_04_184533_create_faculty_table.php)
+# (create manually: database/migrations/2025_04_04_184533_create_faculty_table.php)
 
 # Step 3: Run migrations
-php migrate.php
+php database/migrate.php
+
+# Step 4: Create admin user (if needed)
+php scripts/admin/create_admin.php
 ```
 
 ---
 
 ## 🔧 Config
 
-Edit `config/database.php` to update your DB connection.
+Edit `config/database.php` to update your DB connection:
 
 ```php
 class Database {
@@ -135,7 +175,9 @@ class Database {
 ## 💡 Tips
 
 - Keep migration filenames unique using timestamps (e.g. `2025_04_04_184533_create_users_table.php`)
-- You can expand `cli.php` to support route generation, migration creation, etc.
+- Check the logs directory for debugging information
+- Use the admin scripts for user management
+- The CLI tool can be extended to support more commands
 
 ---
 
