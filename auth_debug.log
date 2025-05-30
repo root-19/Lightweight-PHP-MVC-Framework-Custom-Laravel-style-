@@ -1,0 +1,396 @@
+Admin login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+            [role] => admin
+            [created_at] => 2025-05-05 18:32:01
+        )
+
+    [role] => admin
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 2
+            [username] => user
+            [email] => wasieacuna@gmail.com
+            [password] => $2y$10$8unzcUU9.vG..N7.U6V.COg7o1FMYCUfleXsGfF0IYsZNeAxmIA0K
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:24:40
+            [updated_at] => 2025-05-05 18:35:48
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 2
+            [username] => user
+            [email] => wasieacuna@gmail.com
+            [password] => $2y$10$8unzcUU9.vG..N7.U6V.COg7o1FMYCUfleXsGfF0IYsZNeAxmIA0K
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:24:40
+            [updated_at] => 2025-05-05 18:35:48
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+            [role] => admin
+            [created_at] => 2025-05-05 18:32:01
+        )
+
+    [role] => admin
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 3
+            [username] => rens
+            [email] => thejust10academy@gmail.com
+            [password] => $2y$10$BlfVOdpQsXyGIBtGhoLewuDcVYbWSjQmU06niu2nhSZ60T2zl4NEO
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:43:32
+            [updated_at] => 2025-05-05 18:43:32
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 3
+            [username] => rens
+            [email] => thejust10academy@gmail.com
+            [password] => $2y$10$BlfVOdpQsXyGIBtGhoLewuDcVYbWSjQmU06niu2nhSZ60T2zl4NEO
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:43:32
+            [updated_at] => 2025-05-05 18:43:32
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 3
+            [username] => rens
+            [email] => thejust10academy@gmail.com
+            [password] => $2y$10$BlfVOdpQsXyGIBtGhoLewuDcVYbWSjQmU06niu2nhSZ60T2zl4NEO
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:43:32
+            [updated_at] => 2025-05-05 18:43:32
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 3
+            [username] => rens
+            [email] => thejust10academy@gmail.com
+            [password] => $2y$10$BlfVOdpQsXyGIBtGhoLewuDcVYbWSjQmU06niu2nhSZ60T2zl4NEO
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:43:32
+            [updated_at] => 2025-05-05 18:43:32
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 3
+            [username] => rens
+            [email] => thejust10academy@gmail.com
+            [password] => $2y$10$BlfVOdpQsXyGIBtGhoLewuDcVYbWSjQmU06niu2nhSZ60T2zl4NEO
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:43:32
+            [updated_at] => 2025-05-05 18:43:32
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 3
+            [username] => rens
+            [email] => thejust10academy@gmail.com
+            [password] => $2y$10$BlfVOdpQsXyGIBtGhoLewuDcVYbWSjQmU06niu2nhSZ60T2zl4NEO
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:43:32
+            [updated_at] => 2025-05-05 18:43:32
+            [token_expires_at] => 
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 3
+            [username] => rens
+            [email] => thejust10academy@gmail.com
+            [password] => $2y$10$BlfVOdpQsXyGIBtGhoLewuDcVYbWSjQmU06niu2nhSZ60T2zl4NEO
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:43:32
+            [updated_at] => 2025-05-05 18:50:11
+            [token_expires_at] => 
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 3
+            [username] => rens
+            [email] => thejust10academy@gmail.com
+            [password] => $2y$10$BlfVOdpQsXyGIBtGhoLewuDcVYbWSjQmU06niu2nhSZ60T2zl4NEO
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:43:32
+            [updated_at] => 2025-05-05 18:50:11
+            [token_expires_at] => 
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+            [role] => admin
+            [created_at] => 2025-05-05 18:32:01
+            [remember_token] => 
+            [token_expires_at] => 
+        )
+
+    [role] => admin
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 
+)
+
+Admin login attempt result: Array
+(
+    [success] => 
+)
+
+User login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 3
+            [username] => rens
+            [email] => thejust10academy@gmail.com
+            [password] => $2y$10$BlfVOdpQsXyGIBtGhoLewuDcVYbWSjQmU06niu2nhSZ60T2zl4NEO
+            [remember_token] => 
+            [email_verified_at] => 
+            [is_active] => 1
+            [role] => user
+            [created_at] => 2025-05-05 18:43:32
+            [updated_at] => 2025-05-05 18:50:11
+            [token_expires_at] => 
+            [last_activity] => 
+        )
+
+    [role] => user
+)
+
+Admin login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+            [role] => admin
+            [created_at] => 2025-05-05 18:32:01
+            [remember_token] => 
+            [token_expires_at] => 
+        )
+
+    [role] => admin
+)
+
+Admin login attempt result: Array
+(
+    [success] => 1
+    [user] => Array
+        (
+            [id] => 1
+            [username] => admin
+            [email] => admin@example.com
+            [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+            [role] => admin
+            [created_at] => 2025-05-05 18:32:01
+            [remember_token] => 
+            [token_expires_at] => 
+        )
+
+    [role] => admin
+)
+

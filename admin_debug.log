@@ -1,0 +1,190 @@
+Login attempt - Email: wasieacuna@gmail.com
+Admin data found: 
+No admin found with email: wasieacuna@gmail.com
+Login attempt - Email: admin@example.com
+Admin data found: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+    [role] => admin
+    [created_at] => 2025-05-05 18:32:01
+)
+
+Stored hashed password: $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+Attempting to verify password...
+Password verification result: true
+Login successful for admin: admin
+Login attempt - Email: admin@example.com
+Admin data found: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+    [role] => admin
+    [created_at] => 2025-05-05 18:32:01
+)
+
+Stored hashed password: $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+Attempting to verify password...
+Password verification result: true
+Login successful for admin: admin
+Login attempt - Email: admin@example.com
+Admin data found: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+    [role] => admin
+    [created_at] => 2025-05-05 18:32:01
+)
+
+Stored hashed password: $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+Attempting to verify password...
+Password verification result: true
+Login successful for admin: admin
+Login attempt - Email: wasieacuna@gmail.com
+Admin data found: 
+No admin found with email: wasieacuna@gmail.com
+Login attempt - Email: wasieacuna@gmail.com
+Admin data found: 
+No admin found with email: wasieacuna@gmail.com
+Login attempt - Email: wasieacuna@gmail.com
+Admin data found: 
+No admin found with email: wasieacuna@gmail.com
+Login attempt - Email: admin@example.com
+Admin data found: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+    [role] => admin
+    [created_at] => 2025-05-05 18:32:01
+)
+
+Stored hashed password: $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+Attempting to verify password...
+Password verification result: true
+Login successful for admin: admin
+Email check for thejust10academy@gmail.com - Exists: false
+Login attempt - Email: thejust10academy@gmail.com
+Admin data found: 
+No admin found with email: thejust10academy@gmail.com
+Login attempt - Email: thejust10academy@gmail.com
+Admin data found: 
+No admin found with email: thejust10academy@gmail.com
+Login attempt - Email: thejust10academy@gmail.com
+Admin data found: 
+No admin found with email: thejust10academy@gmail.com
+Login attempt - Email: thejust10academy@gmail.com
+Admin data found: 
+No admin found with email: thejust10academy@gmail.com
+Error getting admin by remember token: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'remember_token' in 'where clause'
+Login attempt - Email: thejust10academy@gmail.com
+Admin data found: 
+No admin found with email: thejust10academy@gmail.com
+Remember token lookup - Found admin: no
+Login attempt - Email: thejust10academy@gmail.com
+Admin data found: 
+No admin found with email: thejust10academy@gmail.com
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Remember token lookup - Found admin: no
+Login attempt - Email: thejust10academy@gmail.com
+Admin data found: 
+No admin found with email: thejust10academy@gmail.com
+Login attempt - Email: thejust10academy@gmail.com
+Admin data found: 
+No admin found with email: thejust10academy@gmail.com
+Login attempt - Email: admin@example.com
+Admin data found: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+    [role] => admin
+    [created_at] => 2025-05-05 18:32:01
+    [remember_token] => 
+    [token_expires_at] => 
+)
+
+Stored hashed password: $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+Attempting to verify password...
+Password verification result: true
+Login successful for admin: admin
+Remember token update for admin ID 1 - Success: true
+Remember token lookup - Found admin: yes
+Remember token lookup - Found admin: yes
+Remember token cleared for admin ID 1 - Success: true
+Login attempt - Email: admin@example.com
+Admin data found: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+    [role] => admin
+    [created_at] => 2025-05-05 18:32:01
+    [remember_token] => 
+    [token_expires_at] => 
+)
+
+Stored hashed password: $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+Attempting to verify password...
+Password verification result: false
+Password verification failed
+Login attempt - Email: admin@gmail.com
+Admin data found: 
+No admin found with email: admin@gmail.com
+Login attempt - Email: thejust10academy@gmail.com
+Admin data found: 
+No admin found with email: thejust10academy@gmail.com
+Login attempt - Email: admin@example.com
+Admin data found: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+    [role] => admin
+    [created_at] => 2025-05-05 18:32:01
+    [remember_token] => 
+    [token_expires_at] => 
+)
+
+Stored hashed password: $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+Attempting to verify password...
+Password verification result: true
+Login successful for admin: admin
+Login attempt - Email: admin@example.com
+Admin data found: Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [password] => $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+    [role] => admin
+    [created_at] => 2025-05-05 18:32:01
+    [remember_token] => 
+    [token_expires_at] => 
+)
+
+Stored hashed password: $2y$10$iCxiIWLfRtse7v78gFw3COXVEk3GMzxRnsapkO/fshrgkrXlLRFR2
+Attempting to verify password...
+Password verification result: true
+Login successful for admin: admin

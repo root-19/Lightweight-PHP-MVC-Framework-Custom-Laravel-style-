@@ -1,0 +1,90 @@
+# Framework Documentation
+
+## Authentication System
+
+### User Roles
+The framework supports multiple user roles:
+- Admin
+- Regular User
+
+### User Properties
+Users in the system have the following attributes:
+- id: Unique identifier
+- username: User's login name
+- email: User's email address
+- password: Encrypted password (using bcrypt with cost factor 10)
+- role: User's role (admin/user)
+- created_at: Account creation timestamp
+- updated_at: Last update timestamp
+- remember_token: Token for "Remember Me" functionality
+- email_verified_at: Email verification timestamp
+- is_active: Account status flag
+- token_expires_at: Authentication token expiration
+- last_activity: Last user activity timestamp
+
+### Authentication Features
+1. Secure Login System
+   - Password encryption using bcrypt
+   - Role-based access control
+   - Session management
+   - Activity logging
+
+2. Security Features
+   - Password hashing
+   - Token-based authentication
+   - Email verification
+   - Account activity tracking
+   - Session timeout management
+
+### Login Process
+The system logs all login attempts with the following information:
+- Success/failure status
+- User details (if successful)
+- Role verification
+- Timestamp
+
+## Best Practices
+1. Password Security
+   - All passwords are hashed using bcrypt
+   - Strong password encryption with salt
+
+2. Session Management
+   - Token-based authentication
+   - Expiration handling
+   - Remember me functionality
+
+3. User Management
+   - Active status tracking
+   - Email verification
+   - Last activity monitoring
+   - Role-based permissions
+
+## System Requirements
+- PHP with bcrypt support
+- Database system (MySQL/PostgreSQL)
+- Web server (Apache/Nginx)
+
+## Security Considerations
+1. Password Storage
+   - Passwords are never stored in plain text
+   - Uses secure hashing algorithm (bcrypt)
+
+2. Access Control
+   - Role-based access control
+   - Separate admin and user privileges
+   - Activity logging for security audit
+
+3. Session Security
+   - Token expiration
+   - Activity timeout
+   - Secure session handling
+
+## Maintenance
+- Regular security updates recommended
+- Monitor auth_debug.log for suspicious activities
+- Regular backup of user data
+- Periodic security audits
+
+For technical support or questions, please contact the system administrator.
+
+Last Updated: 2025-05-05 
