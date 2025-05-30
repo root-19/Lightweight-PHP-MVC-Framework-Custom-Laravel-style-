@@ -19,5 +19,5 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "dev-main"
+    "version": "1.0.0"
 }
