@@ -17,13 +17,12 @@
       "php": ">=7.4",
       "vlucas/phpdotenv": "^5.6"
     },
-    "repositories": [
-      {
-        "type": "path",
-           "url": "C:/Users/admin/Desktop/laravel-project/framework"
-      }
-    ],
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "framework": {
+            "type": "vcs",
+            "url": "https://github.com/root-19/Lightweight-PHP-MVC-Framework-Custom-Laravel-style-"
+        }
+    }
 }
-  
