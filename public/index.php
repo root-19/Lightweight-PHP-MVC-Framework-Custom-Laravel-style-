@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 // session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 ?>
@@ -370,3 +371,10 @@ APP_ENV=development</pre>
     </script>
 </body>
 </html>
+=======
+
+
+require_once __DIR__ . '/../routes/web.php';
+
+?>
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f

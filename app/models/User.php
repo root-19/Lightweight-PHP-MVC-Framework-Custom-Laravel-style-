@@ -4,11 +4,16 @@ namespace root_dev\Models;
 
 
 require_once __DIR__ . '/../../config/database.php';
+<<<<<<< HEAD
 use root_dev\Config\Database;
+=======
+use \Database;
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
 
 
 
 class User {
+<<<<<<< HEAD
     private $db;
     private $errors = [];
 
@@ -26,10 +31,21 @@ class User {
             $this->errors[] = "Database error: " . $e->getMessage();
             return false;
         }
+=======
+
+    // Check if email exists
+    public function emailExists($email) {
+        $db = Database::connect();
+        $query = "SELECT COUNT(*) FROM users WHERE email = ?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$email]);
+        return $stmt->fetchColumn() > 0;
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
     }
 
     // Get user data by email
     public function getUserByEmail($email) {
+<<<<<<< HEAD
         try {
             $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ?");
             $stmt->execute([$email]);
@@ -144,5 +160,20 @@ class User {
     // Get last error
     public function getErrors() {
         return $this->errors;
+=======
+        $db = Database::connect();
+        $query = "SELECT * FROM users WHERE email = ?";
+        $stmt = $db->prepare($query);
+        $stmt->execute([$email]);
+        return $stmt->fetch(\PDO::FETCH_ASSOC); // Use \PDO here
+    }
+
+    // Register a new user
+    public function register($username, $email, $password) {
+        $db = Database::connect();
+        $query = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        $stmt = $db->prepare($query);
+        return $stmt->execute([$username, $email, password_hash($password, PASSWORD_DEFAULT)]);
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
     }
 }

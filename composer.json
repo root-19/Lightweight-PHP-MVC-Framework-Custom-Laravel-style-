@@ -1,10 +1,19 @@
 {
+<<<<<<< HEAD
     "name": "NextGen framework",
     "description": "A secure PHP application with JWT authentication",
     "type": "project",
     "autoload": {
       "psr-4": {
         "App\\": "app/"
+=======
+    "name": "root_dev/framework",
+    "description": "Lightweight PHP MVC Framework (Custom Laravel-style)",
+    "type": "project",
+    "autoload": {
+      "psr-4": {
+        "root_dev\\": "app/"
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
       }
     },
     "scripts": {
@@ -14,8 +23,12 @@
     },
     "require": {
       "php": ">=7.4",
+<<<<<<< HEAD
       "firebase/php-jwt": "^6.0",
       "vlucas/phpdotenv": "^5.3"
+=======
+      "vlucas/phpdotenv": "^5.6"
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
     },
     "repositories": [
       {

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 // session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -47,6 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+=======
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="bg-gray-800 text-white w-full max-w-md p-10 rounded-lg shadow-xl">
       <h2 class="text-3xl font-bold mb-4 text-center">Register</h2>
 
+<<<<<<< HEAD
       <?php if (isset($_SESSION['error'])): ?>
         <div class="bg-red-500 text-white p-3 rounded mb-4">
           <?php echo htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
@@ -77,16 +81,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                  pattern="[a-zA-Z0-9_]{3,20}"
                  title="Username must be between 3 and 20 characters and can only contain letters, numbers, and underscores"
                  class="w-full p-3 text-black mb-4 border border-gray-300 rounded" />
+=======
+      <form action="/register" method="POST" class="space-y-4">
+        <div>
+          <label for="username" class="block text-lg">Username:</label>
+          <input type="text" name="username" id="username" required class="w-full p-3  text-black mb-4 border border-gray-300 rounded" />
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
         </div>
 
         <div>
           <label for="email" class="block text-lg">Email:</label>
+<<<<<<< HEAD
           <input type="email" name="email" id="email" required 
                  class="w-full p-3 mb-4 text-black border border-gray-300 rounded" />
+=======
+          <input type="email" name="email" id="email" required class="w-full p-3 mb-4 text-black border border-gray-300 rounded" />
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
         </div>
 
         <div>
           <label for="password" class="block text-lg">Password:</label>
+<<<<<<< HEAD
           <input type="password" name="password" id="password" required 
                  minlength="8"
                  class="w-full p-3 text-black mb-2 border border-gray-300 rounded" />
@@ -98,6 +113,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                  minlength="8"
                  class="w-full p-3 text-black mb-4 border border-gray-300 rounded" />
           <p class="text-sm text-gray-400">Password must be at least 8 characters long</p>
+=======
+          <input type="password" name="password" id="password" required class="w-full p-3 text-black mb-6 border border-gray-300 rounded" />
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
         </div>
 
         <button type="submit" class="w-full bg-red-600 text-white py-3 rounded-full hover:bg-red-700 transition">

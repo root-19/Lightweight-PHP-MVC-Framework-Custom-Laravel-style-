@@ -2,6 +2,7 @@
 namespace root_dev\Middleware;
 
 class AuthMiddleware
+<<<<<<< HEAD
 
 
 /**
@@ -62,4 +63,36 @@ class AuthMiddleware
         header("Location: {$location}");
         exit();
     }
+=======
+{
+    public static function check()
+    {
+        session_start();
+
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+    }
+
+    public static function checkAdmin()
+    {
+        session_start();
+
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+            header('Location: /dashboard.php'); // redirect non-admins
+            exit();
+        }
+    }
+
+    public static function checkUser()
+    {
+        session_start();
+
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'user') {
+            header('Location: /admin/dashboard.php'); 
+            exit();
+        }
+    }
+>>>>>>> 551d3d7087e4e7dc9d5f3d497e1b9601bbb4882f
 }
